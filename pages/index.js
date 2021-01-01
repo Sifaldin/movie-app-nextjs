@@ -7,29 +7,37 @@ import MOVIE_DATA from "../resources/movie_data";
 
 
 export default function Home(props) {
+  const { images } = props
   return (
     <div>
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-3">
-              <SideMenu appName={"Movie DB"} />
-            </div>
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-3">
+            <SideMenu appName={"Movie DB"} />
+          </div>
 
-            <div className="col-lg-9">
-              <Carousel />
+          <div className="col-lg-9">
+            <Carousel images={images} />
 
-              <div className="row">
+            <div className="row">
 
-                <MovieList movies={props.movies || [] } />
-              </div>
+              <MovieList movies={props.movies || []} />
             </div>
           </div>
         </div>
+      </div>
     </div>
   )
 }
 
 Home.getInitialProps = async () => {
   const movies = await getMovies();
-  return { movies };
+  const images = movies.map((m) => {
+    return {
+      id: `image-${m.id}`,
+      url: m.cover,
+      name: m.name
+    }
+  })
+  return { movies, images };
 }
