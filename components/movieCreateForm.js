@@ -1,14 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const MovieCreateForm = (props) => {
 
-    const [form, setForm] = useState({
+    /*  const[isInitialDataLoaded, setIsInitialDataLoaded] = useState(false); */
+
+    const formData = props.initialData ? { ...props.initialData } : {
         name: '',
         description: '',
         rating: '',
         image: '',
         cover: '',
-    });
+    }
+
+    const [form, setForm] = useState(formData);
+
+
+    /* useEffect(() => {
+        console.log(props.initialData)
+        if(props.initialData){
+            setForm(props.initialData)
+            setIsInitialDataLoaded(true)
+        }
+    }, [isInitialDataLoaded]) */
 
     const handleChange = (e) => {
         const { value } = e.target;
@@ -36,10 +49,10 @@ const MovieCreateForm = (props) => {
         });
     }
 
-    const submitForm = ()=>{
-        props.handleFormSubmit({...form});
-
+    const submitForm = () => {
+        props.handleFormSubmit({ ...form });
     }
+
     return (
         <div>
             <form>
@@ -59,6 +72,7 @@ const MovieCreateForm = (props) => {
                     <label htmlFor="description">Description</label>
 
                     <input
+                        onChange={handleChange}
                         name="description"
                         value={form.description}
                         type="text"
@@ -69,6 +83,7 @@ const MovieCreateForm = (props) => {
                 <div className="form-group">
                     <label htmlFor="description">Rating</label>
                     <input
+                        onChange={handleChange}
                         value={form.rating}
                         name="rating"
                         type="number"
@@ -83,6 +98,7 @@ const MovieCreateForm = (props) => {
                 <div className="form-group">
                     <label htmlFor="image">Image</label>
                     <input
+                        onChange={handleChange}
                         value={form.image}
                         name="image"
                         type="text"
@@ -92,7 +108,9 @@ const MovieCreateForm = (props) => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="cover">Cover</label>
-                    <input value={form.cover}
+                    <input
+                        onChange={handleChange}
+                        value={form.cover}
                         name="cover"
                         type="text" className="form-control" id="cover" placeholder="http://......" />
                 </div>
@@ -107,7 +125,12 @@ const MovieCreateForm = (props) => {
                         <option>action</option>
                     </select>
                 </div>
-                <button type="button" className="btn btn-primary" onClick={submitForm}>Create</button>
+                <button
+                    type="button"
+                    className="btn btn-primary mb-1"
+                    onClick={submitForm}>
+                    {props.submitButton || 'Create'}
+                </button>
             </form>
         </div>
     )
