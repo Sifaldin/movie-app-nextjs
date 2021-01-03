@@ -1,4 +1,4 @@
-import '../styles/globals.css';
+import '../styles/index.scss';
 import Head from 'next/head';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
@@ -24,7 +24,8 @@ function MovieApp({ Component, pageProps }) {
 
       <style jsx>
         {`.base-page{
-            padding-top: 80px;
+            padding-top: 100px;
+            padding-bottom: 200px;
         }`}
       </style>
     </div>
